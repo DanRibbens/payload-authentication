@@ -1,0 +1,408 @@
+{
+	"variables": [],
+	"info": {
+		"name": "payload-blog/authentication",
+		"_postman_id": "29aaf095-dc73-f46e-d5e9-54c5975555fb",
+		"description": "Collections used for authentication sample app for blog post written for https://payloadcms.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"description": "",
+			"item": [
+				{
+					"name": "Refresh Token",
+					"request": {
+						"url": "http://localhost:3000/api/users/refresh-token",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "\tAfter you have a JWT token you can refresh it"
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"url": "http://{{url}}/api/users",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@example.com\",\n\t\"password\": \"password\"\n}"
+						},
+						"description": "This request will work if you have an access policy that allows guest users to register"
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"url": "http://{{url}}/api/users/reset-password",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\": \"158db02de7ade6b160b15b3ac7b113e114300136\",\n\t\"password\": \"password123\"\n}"
+						},
+						"description": "\tComplete the Forgot Password Request first, then get the \"token\" from the email sent or directly from the database"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"token\", jsonData.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{url}}/api/users/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@example.com\",\n\t\"password\": \"password\"\n}"
+						},
+						"description": "\t"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"token\", jsonData.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{url}}/api/users/verify/0e2813debfb93a12768e7d6d314fd9c2c2298145",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"token\": \"test123\"\n}"
+						},
+						"description": "\tComplete the Create User request first. Then use the token from the email or directly from your database."
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"url": "http://{{url}}/api/users/{{id}}",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "jwt {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user+1@example.com\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Me",
+					"request": {
+						"url": "http://{{url}}/api/users/me",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "\tThis is to test that the JWT comes through properly.  "
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"url": "http://{{url}}/api/users/forgot-password",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@example.com\"\n}"
+						},
+						"description": "\t"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admins",
+			"description": "",
+			"item": [
+				{
+					"name": "Create (forbidden for guest)",
+					"request": {
+						"url": "http://{{url}}/api/admins",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"newadmin@example.com\",\n\t\"password\": \"password\"\n}"
+						},
+						"description": "This request will NOT work because of the admin collections policy."
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"url": "http://{{url}}/api/admins/reset-password",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\": \"458db02de7ade6b160b15b3ac7b113e114300136\",\n\t\"password\": \"password123\"\n}"
+						},
+						"description": "\tComplete the Forgot Password Request first, then get the \"token\" from the email sent or directly from the database"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"token\", jsonData.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{url}}/api/admins/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"admin@example.com\",\n\t\"password\": \"password\"\n}"
+						},
+						"description": "\t"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Admin",
+					"request": {
+						"url": "http://{{url}}/api/admins/{{id}}",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"admin+1@example.com\"\n}"
+						},
+						"description": "An admin can update themselves or another admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Me",
+					"request": {
+						"url": "http://{{url}}/api/admins/me",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "\tThis is to test that the JWT comes through properly.  "
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"url": "http://{{url}}/api/admins/forgot-password",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@example.com\"\n}"
+						},
+						"description": "\t"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"url": "http://localhost:3000/api/admins/refresh-token",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{token}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": "\tAfter you have a JWT token you can refresh it"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
