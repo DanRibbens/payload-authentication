@@ -27,7 +27,7 @@ const Users = {
     useAsTitle: 'email',
   },
   access: {
-    create: isGuest,
+    create: () => true,
     read: isSelf,
     update: isSelf,
     delete: () => false,
